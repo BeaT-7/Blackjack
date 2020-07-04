@@ -49,12 +49,29 @@ class Player:
         self.name = name
         self.points = 0
         self.hand = []
+        self.money = 2500
 
     def Start(self, deck):
         self.hand = []
         for i in range(2):
-            id = random.randint(0, len(deck))
+            id = random.randint(0, len(deck)-1)
             self.hand.append(deck.Cards[id])
             deck.Cards.pop(id)
 
-#52 kartis 1 decka
+    def GetCard(self, deck):
+        id = random.randint(0, len(deck)-1)
+        self.hand.append(deck.Cards[id])
+        deck.Cards.pop(id)
+
+    def Score(self):
+        score = 0
+        for card in self.hand:
+            score += int(card.Points)
+        return score
+
+    def Ace(self):
+        loc = []
+        for spot, card in enumerate(self.hand):
+            if card.Value == 'Ace' and spot not in loc:
+                loc.append(spot)
+        return loc
