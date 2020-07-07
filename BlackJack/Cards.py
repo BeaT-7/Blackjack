@@ -1,6 +1,8 @@
 import pygame
 import random
 
+
+
 pygame.init()
 infoObject = pygame.display.Info()
 
@@ -75,3 +77,7 @@ class Player:
             if card.Value == 'Ace' and spot not in loc:
                 loc.append(spot)
         return loc
+
+    def __len__(self):
+        return len(self.hand)
+
