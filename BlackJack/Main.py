@@ -29,13 +29,13 @@ def Winnerr():
         if bot.Score() == 21:
             Winner = cfont.render(str(f'Draw'), 1, (255, 255, 255))
             screen.blit(Winner, (infoObject.current_w * 0.48, infoObject.current_h * 0.49))
-        elif bot.Score() <=15:
+        elif bot.Score() <= 15:
             while bot.Score() <= 15:
                 bot.GetCard(deck)
                 BotAceCheck()
-            if bot.Score() != 21:
-                Winner = cfont.render(str(f'{you.name} Wins'), 1, (255, 255, 255))
-                screen.blit(Winner, (infoObject.current_w * 0.48, infoObject.current_h * 0.49))
+        elif bot.Score() != 21:
+            Winner = cfont.render(str(f'{you.name} Wins'), 1, (255, 255, 255))
+            screen.blit(Winner, (infoObject.current_w * 0.48, infoObject.current_h * 0.49))
         EndRound()
     elif you.Score() > 21:
         Winner = cfont.render(str(f'{bot.name} Wins'), 1, (255, 255, 255))
