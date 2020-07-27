@@ -28,35 +28,39 @@ def Winnerr():
     if you.Score() == 21:
         if bot.Score() == 21:
             Winner = cfont.render(str(f'Draw'), 1, (255, 255, 255))
-            screen.blit(Winner, (infoObject.current_w * 0.48, infoObject.current_h * 0.49))
+            screen.blit(Winner, WinLoc)
         elif bot.Score() <= 15:
             while bot.Score() <= 15:
                 bot.GetCard(deck)
                 BotAceCheck()
         elif bot.Score() != 21:
             Winner = cfont.render(str(f'{you.name} Wins'), 1, (255, 255, 255))
-            screen.blit(Winner, (infoObject.current_w * 0.48, infoObject.current_h * 0.49))
+            screen.blit(Winner, WinLoc)
         EndRound()
     elif you.Score() > 21:
         Winner = cfont.render(str(f'{bot.name} Wins'), 1, (255, 255, 255))
-        screen.blit(Winner, (infoObject.current_w * 0.48, infoObject.current_h * 0.49))
+        screen.blit(Winner, WinLoc)
         EndRound()
 
 def BWinner():
     global GameOn
     if you.Score() == bot.Score():
         Winner = cfont.render(str(f'Draw'), 1, (255, 255, 255))
-        screen.blit(Winner, (infoObject.current_w * 0.48, infoObject.current_h * 0.49))
+        screen.blit(Winner, WinLoc)
     elif you.Score() > bot.Score() or bot.Score() > 21:
         Winner = cfont.render(str(f'{you.name} Wins'), 1, (255, 255, 255))
-        screen.blit(Winner, (infoObject.current_w * 0.48, infoObject.current_h * 0.49))
+        screen.blit(Winner, WinLoc)
     elif you.Score() < bot.Score() and bot.Score() <=21:
         Winner = cfont.render(str(f'{bot.name} Wins'), 1, (255, 255, 255))
-        screen.blit(Winner, (infoObject.current_w * 0.48, infoObject.current_h * 0.49))
+        screen.blit(Winner, WinLoc)
     EndRound()
 
 def Visual():
     screen.blit(pygame.image.load('Pics\TableAndHands.png'), (0, 0))
+    # RR button display
+    if not GameOn:
+        if (time.time() - startT > 2.5):
+            pygame.draw.rect(screen, (179, 179, 0), rrBtn)
     # deck display
     for card in deck.Cards:
         screen.blit(card.cardPic, deckPos)
@@ -81,7 +85,8 @@ def Visual():
     YourScore = cfont.render(str(f'Your Score: {you.Score()}'), 1, (255, 255, 255))
     screen.blit(YourScore, (infoObject.current_w * 0.04, infoObject.current_h / 2 * 1.03))
     BotScore = cfont.render(str(f'Bot Score: {bot.Score()}'), 1, (255, 255, 255))
-    screen.blit(BotScore, (infoObject.current_w * 0.04, infoObject.current_h / 2 * 0.97))
+    if not GameOn:
+        screen.blit(BotScore, (infoObject.current_w * 0.04, infoObject.current_h / 2 * 0.97))
 
     #buttons
     pygame.draw.ellipse(screen, (255, 70, 120), standBtn)
@@ -103,6 +108,7 @@ mDown = False
 mainLoop = True
 fps = 60
 aceLocation = []
+WinLoc = (infoObject.current_w * 0.46, infoObject.current_h * 0.41)
 
 #screen setup
 infoObject = pygame.display.Info()
@@ -112,7 +118,7 @@ pygame.display.set_caption('Blackjack')
 #buttons
 standBtn = pygame.Rect(infoObject.current_w * 0.04, infoObject.current_h * 0.8, infoObject.current_w * 0.05, infoObject.current_w * 0.05)
 doubleBtn = pygame.Rect(infoObject.current_w * 0.12, infoObject.current_h * 0.8, infoObject.current_w * 0.05, infoObject.current_w * 0.05)
-rrBtn = pygame.Rect(infoObject.current_w * 0.44, infoObject.current_h * 0.44, infoObject.current_w * 0.12, infoObject.current_h * 0.12)
+rrBtn = pygame.Rect(infoObject.current_w * 0.46, infoObject.current_h * 0.46, infoObject.current_w * 0.08, infoObject.current_h * 0.08)
 
 #deck
 deck = Deck()
@@ -201,8 +207,6 @@ while mainLoop:
     #games RR
     if not GameOn:
         if (time.time() - startT > 2.5):
-            pygame.draw.rect(screen, (179, 179, 0), rrBtn)
-            pygame.display.update()
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 pos = event.pos
                 if rrBtn.collidepoint(pos):
