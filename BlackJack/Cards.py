@@ -1,7 +1,6 @@
 import pygame
 import random
-
-
+from Scaling import *
 
 pygame.init()
 infoObject = pygame.display.Info()
@@ -29,7 +28,7 @@ class Cards:
     def __init__(self, Suit, Value):
         self.Suit = Suit
         self.Value, self.Points = self.valCheck(Value)
-        self.cardPic = pygame.image.load(f'Pics\{str(self.Value)}{self.Suit[:1]}.png')
+        self.cardPic = pygame.image.load(f'{tempdir}\{str(self.Value)}{self.Suit[:1]}.png')
 
     def valCheck(self, val):
         if val == 14:
