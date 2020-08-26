@@ -51,6 +51,7 @@ class Player:
         self.points = 0
         self.hand = []
         self.money = 2500
+        self.bet = 0
 
     def Start(self, deck):
         self.hand = []
@@ -79,4 +80,3 @@ class Player:
 
     def __len__(self):
         return len(self.hand)
-
